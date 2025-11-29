@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>发布寻人 - 寻人启示平台</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>寻人启示平台</h1>
+                <p>让爱回家 - Helping families reunite</p>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="list.html">寻人列表</a></li>
+                    <li><a href="submit.html" class="active">发布寻人</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container" style="max-width: 800px;">
+            <div style="text-align: center; margin-bottom: 3rem;">
+                <h2>发布寻人启事</h2>
+                <p>请尽可能详细地填写信息，以便尽快找到走失人员。</p>
+            </div>
+
+            <form action="#" method="POST" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow-sm);">
+                
+                <h3>基本信息</h3>
+                <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">姓名 <span style="color: red">*</span></label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">性别 <span style="color: red">*</span></label>
+                        <select class="form-control" required>
+                            <option value="">请选择</option>
+                            <option value="male">男</option>
+                            <option value="female">女</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">出生日期</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">身高 (cm)</label>
+                        <input type="number" class="form-control">
+                    </div>
+                </div>
+
+                <h3>走失情况</h3>
+                <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
+                    <div class="form-group">
+                        <label class="form-label">走失时间 <span style="color: red">*</span></label>
+                        <input type="datetime-local" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">走失地点 <span style="color: red">*</span></label>
+                        <input type="text" class="form-control" required placeholder="例如：北京市海淀区xx路">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">体貌特征描述</label>
+                    <textarea class="form-control" rows="3" placeholder="请描述发型、肤色、体型、是否有胎记/伤疤等..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">走失时衣着</label>
+                    <textarea class="form-control" rows="2" placeholder="上衣、裤子/裙子、鞋子颜色及款式..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">上传照片 <span style="color: red">*</span></label>
+                    <div style="border: 2px dashed #ddd; padding: 2rem; text-align: center; border-radius: var(--radius); cursor: pointer;">
+                        <p style="color: var(--secondary-color);">点击或拖拽照片到此处上传</p>
+                        <p style="font-size: 0.8rem; color: #999;">支持 JPG, PNG 格式，建议上传清晰正面近照</p>
+                    </div>
+                </div>
+
+                <h3>联系方式</h3>
+                <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label class="form-label">联系人姓名 <span style="color: red">*</span></label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">与走失人关系</label>
+                        <input type="text" class="form-control" placeholder="例如：父亲、母亲">
+                    </div>
+                </div>
+
+                <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr;">
+                    <div class="form-group">
+                        <label class="form-label">联系电话 <span style="color: red">*</span></label>
+                        <input type="tel" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">备用电话</label>
+                        <input type="tel" class="form-control">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 2rem;">
+                    <label style="display: block; margin-bottom: 1rem;">
+                        <input type="checkbox" required> 我承诺以上信息真实有效，并愿意承担相应法律责任。
+                    </label>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.2rem;">发布信息</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 寻人启示公益平台 Missing Persons Finder</p>
+            <p>联系我们: contact@missingpersons.org | 电话: 400-123-4567</p>
+        </div>
+    </footer>
+</body>
+</html>
