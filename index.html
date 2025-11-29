@@ -41,55 +41,56 @@
                     <a href="list.html" style="color: var(--primary-color); text-decoration: none;">查看全部 &rarr;</a>
                 </div>
                 
-                <div class="grid">
-                    <!-- Mock Data 1 -->
-                    <div class="card">
-                        <img src="https://placehold.co/400x300?text=Missing+Person" alt="Missing Person" class="card-img">
-                        <div class="card-body">
-                            <h4 class="card-title">张三 (Zhang San)</h4>
-                            <p class="card-text"><strong>年龄:</strong> 12岁</p>
-                            <p class="card-text"><strong>走失地点:</strong> 北京市海淀区</p>
-                            <p class="card-text"><strong>走失时间:</strong> 2024-11-20</p>
-                            <div style="margin-top: 1rem;">
-                                <span class="tag">急寻</span>
-                                <span class="tag">未成年</span>
-                            </div>
-                            <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                        </div>
+                <div class="grid" id="recent-cases-grid">
+                    <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
+                        <p>加载中... / Loading...</p>
                     </div>
-
-                    <!-- Mock Data 2 -->
-                    <div class="card">
-                        <img src="https://placehold.co/400x300?text=Missing+Person" alt="Missing Person" class="card-img">
-                        <div class="card-body">
-                            <h4 class="card-title">李四 (Li Si)</h4>
-                            <p class="card-text"><strong>年龄:</strong> 78岁</p>
-                            <p class="card-text"><strong>走失地点:</strong> 上海市浦东新区</p>
-                            <p class="card-text"><strong>走失时间:</strong> 2024-11-18</p>
-                            <div style="margin-top: 1rem;">
-                                <span class="tag">老人</span>
-                                <span class="tag">阿尔茨海默</span>
-                            </div>
-                            <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                        </div>
-                    </div>
-
-                    <!-- Mock Data 3 -->
-                    <div class="card">
-                        <img src="https://placehold.co/400x300?text=Missing+Person" alt="Missing Person" class="card-img">
-                        <div class="card-body">
-                            <h4 class="card-title">王五 (Wang Wu)</h4>
-                            <p class="card-text"><strong>年龄:</strong> 35岁</p>
-                            <p class="card-text"><strong>走失地点:</strong> 广州市天河区</p>
-                            <p class="card-text"><strong>走失时间:</strong> 2024-10-05</p>
-                            <div style="margin-top: 1rem;">
-                                <span class="tag">成年人</span>
-                            </div>
-                            <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                        </div>
-                    </div>
+                    <!-- Cards will be dynamically inserted here -->
                 </div>
             </section>
+
+            <script type="module">
+                import { supabase } from './js/supabase-client.js';
+
+                async function loadRecentCases() {
+                    const container = document.getElementById('recent-cases-grid');
+                    try {
+                        const { data: cases, error } = await supabase
+                            .from('missing_persons')
+                            .select('*')
+                            .order('created_at', { ascending: false })
+                            .limit(3);
+                        
+                        if (error) throw error;
+
+                        if (!cases || cases.length === 0) {
+                            container.innerHTML = '<div style="text-align: center; width: 100%; grid-column: 1 / -1;"><p>暂无发布信息 / No cases found.</p></div>';
+                            return;
+                        }
+
+                        container.innerHTML = cases.map(person => `
+                            <div class="card">
+                                <img src="${person.photo_url || 'https://placehold.co/400x300?text=No+Image'}" alt="${person.name}" class="card-img">
+                                <div class="card-body">
+                                    <h4 class="card-title">${person.name}</h4>
+                                    <p class="card-text"><strong>走失地点:</strong> ${person.missing_location}</p>
+                                    <p class="card-text"><strong>走失时间:</strong> ${new Date(person.missing_date).toLocaleDateString()}</p>
+                                    <div style="margin-top: 1rem;">
+                                        <span class="tag">${person.gender === 'male' ? '男' : '女'}</span>
+                                    </div>
+                                    <a href="detail.html?id=${person.id}" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
+                                </div>
+                            </div>
+                        `).join('');
+
+                    } catch (err) {
+                        console.error('Error loading cases:', err);
+                        container.innerHTML = '<div style="text-align: center; width: 100%; grid-column: 1 / -1; color: red;"><p>加载失败，请刷新重试。</p></div>';
+                    }
+                }
+
+                loadRecentCases();
+            </script>
 
             <section style="margin-top: 4rem; text-align: center; background: white; padding: 3rem; border-radius: var(--radius); box-shadow: var(--shadow-sm);">
                 <h3>如何提供帮助？</h3>

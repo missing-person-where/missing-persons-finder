@@ -31,85 +31,85 @@
                 <p>请尽可能详细地填写信息，以便尽快找到走失人员。</p>
             </div>
 
-            <form action="#" method="POST" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow-sm);">
+            <form id="submitForm" style="background: white; padding: 2rem; border-radius: var(--radius); box-shadow: var(--shadow-sm);">
                 
-                <h3>基本信息</h3>
+                <h3>基本信息 / Basic Info</h3>
                 <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
                     <div class="form-group">
-                        <label class="form-label">姓名 <span style="color: red">*</span></label>
-                        <input type="text" class="form-control" required>
+                        <label class="form-label">姓名 / Name <span style="color: red">*</span></label>
+                        <input type="text" id="name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">性别 <span style="color: red">*</span></label>
-                        <select class="form-control" required>
-                            <option value="">请选择</option>
-                            <option value="male">男</option>
-                            <option value="female">女</option>
+                        <label class="form-label">性别 / Gender <span style="color: red">*</span></label>
+                        <select id="gender" class="form-control" required>
+                            <option value="">请选择 / Select</option>
+                            <option value="male">男 / Male</option>
+                            <option value="female">女 / Female</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
                     <div class="form-group">
-                        <label class="form-label">出生日期</label>
-                        <input type="date" class="form-control">
+                        <label class="form-label">出生日期 / DOB</label>
+                        <input type="date" id="dob" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label class="form-label">身高 (cm)</label>
-                        <input type="number" class="form-control">
+                        <label class="form-label">身高 (cm) / Height</label>
+                        <input type="number" id="height" class="form-control">
                     </div>
                 </div>
 
-                <h3>走失情况</h3>
+                <h3>走失情况 / Missing Details</h3>
                 <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr; margin-bottom: 1.5rem;">
                     <div class="form-group">
-                        <label class="form-label">走失时间 <span style="color: red">*</span></label>
-                        <input type="datetime-local" class="form-control" required>
+                        <label class="form-label">走失时间 / Time <span style="color: red">*</span></label>
+                        <input type="datetime-local" id="missing_date" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">走失地点 <span style="color: red">*</span></label>
-                        <input type="text" class="form-control" required placeholder="例如：北京市海淀区xx路">
+                        <label class="form-label">走失地点 / Location <span style="color: red">*</span></label>
+                        <input type="text" id="missing_location" class="form-control" required placeholder="例如：北京市海淀区xx路">
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">体貌特征描述</label>
-                    <textarea class="form-control" rows="3" placeholder="请描述发型、肤色、体型、是否有胎记/伤疤等..."></textarea>
+                    <label class="form-label">体貌特征描述 / Description</label>
+                    <textarea id="description" class="form-control" rows="3" placeholder="请描述发型、肤色、体型、是否有胎记/伤疤等..."></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">走失时衣着</label>
-                    <textarea class="form-control" rows="2" placeholder="上衣、裤子/裙子、鞋子颜色及款式..."></textarea>
+                    <label class="form-label">走失时衣着 / Clothing</label>
+                    <textarea id="clothing" class="form-control" rows="2" placeholder="上衣、裤子/裙子、鞋子颜色及款式..."></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">上传照片 <span style="color: red">*</span></label>
+                    <label class="form-label">上传照片 / Upload Photo</label>
                     <div style="border: 2px dashed #ddd; padding: 2rem; text-align: center; border-radius: var(--radius); cursor: pointer;">
-                        <p style="color: var(--secondary-color);">点击或拖拽照片到此处上传</p>
-                        <p style="font-size: 0.8rem; color: #999;">支持 JPG, PNG 格式，建议上传清晰正面近照</p>
+                        <input type="file" id="photo" accept="image/*" class="form-control" style="display: block; margin: 0 auto;">
+                        <p style="font-size: 0.8rem; color: #999; margin-top: 0.5rem;">支持 JPG, PNG 格式 / Supports JPG, PNG</p>
                     </div>
                 </div>
 
-                <h3>联系方式</h3>
+                <h3>联系方式 / Contact Info</h3>
                 <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr;">
                     <div class="form-group">
-                        <label class="form-label">联系人姓名 <span style="color: red">*</span></label>
-                        <input type="text" class="form-control" required>
+                        <label class="form-label">联系人姓名 / Contact Name <span style="color: red">*</span></label>
+                        <input type="text" id="contact_name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">与走失人关系</label>
-                        <input type="text" class="form-control" placeholder="例如：父亲、母亲">
+                        <label class="form-label">与走失人关系 / Relationship</label>
+                        <input type="text" id="contact_relationship" class="form-control" placeholder="例如：父亲、母亲">
                     </div>
                 </div>
 
                 <div class="grid" style="gap: 1rem; grid-template-columns: 1fr 1fr;">
                     <div class="form-group">
-                        <label class="form-label">联系电话 <span style="color: red">*</span></label>
-                        <input type="tel" class="form-control" required>
+                        <label class="form-label">联系电话 / Phone <span style="color: red">*</span></label>
+                        <input type="tel" id="contact_phone" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label class="form-label">备用电话</label>
-                        <input type="tel" class="form-control">
+                        <label class="form-label">备用电话 / Alt Phone</label>
+                        <input type="tel" id="contact_phone_alt" class="form-control">
                     </div>
                 </div>
 
@@ -117,9 +117,78 @@
                     <label style="display: block; margin-bottom: 1rem;">
                         <input type="checkbox" required> 我承诺以上信息真实有效，并愿意承担相应法律责任。
                     </label>
-                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.2rem;">发布信息</button>
+                    <button type="submit" id="submitBtn" class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.2rem;">发布信息 / Submit</button>
                 </div>
             </form>
+
+            <script type="module">
+                import { supabase } from './js/supabase-client.js';
+
+                document.getElementById('submitForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const btn = document.getElementById('submitBtn');
+                    const originalText = btn.innerText;
+                    btn.innerText = '提交中... / Submitting...';
+                    btn.disabled = true;
+
+                    try {
+                        // 1. Handle Photo Upload
+                        const photoFile = document.getElementById('photo').files[0];
+                        let photoUrl = null;
+
+                        if (photoFile) {
+                            const fileName = `${Date.now()}_${photoFile.name}`;
+                            const { data: uploadData, error: uploadError } = await supabase.storage
+                                .from('photos')
+                                .upload(fileName, photoFile);
+                            
+                            if (uploadError) {
+                                console.error('Upload error:', uploadError);
+                                alert('照片上传失败，请检查网络或文件大小。我们将继续提交文字信息。\nPhoto upload failed.');
+                            } else {
+                                const { data: { publicUrl } } = supabase.storage
+                                    .from('photos')
+                                    .getPublicUrl(fileName);
+                                photoUrl = publicUrl;
+                            }
+                        }
+
+                        // 2. Insert Data
+                        const { data, error } = await supabase
+                            .from('missing_persons')
+                            .insert([
+                                {
+                                    name: document.getElementById('name').value,
+                                    gender: document.getElementById('gender').value,
+                                    dob: document.getElementById('dob').value || null,
+                                    height: document.getElementById('height').value || null,
+                                    missing_date: document.getElementById('missing_date').value,
+                                    missing_location: document.getElementById('missing_location').value,
+                                    description: document.getElementById('description').value,
+                                    clothing: document.getElementById('clothing').value,
+                                    photo_url: photoUrl,
+                                    contact_name: document.getElementById('contact_name').value,
+                                    contact_relationship: document.getElementById('contact_relationship').value,
+                                    contact_phone: document.getElementById('contact_phone').value,
+                                    contact_phone_alt: document.getElementById('contact_phone_alt').value
+                                }
+                            ]);
+
+                        if (error) throw error;
+
+                        alert('发布成功！\nSubmitted successfully!');
+                        window.location.href = 'list.html';
+
+                    } catch (err) {
+                        console.error('Error:', err);
+                        alert('发布失败，请重试。\nSubmission failed: ' + err.message);
+                    } finally {
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                    }
+                });
+            </script>
         </div>
     </main>
 

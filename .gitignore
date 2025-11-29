@@ -1,0 +1,9 @@
+# 排除warp.md
+WARP.md
+
+# 排除db文件夹
+db/
+
+# 排除.vscode文件夹
+.vscode/
+

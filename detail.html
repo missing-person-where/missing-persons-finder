@@ -30,71 +30,108 @@
                 <a href="list.html" style="color: var(--secondary-color); text-decoration: none;">&larr; 返回列表</a>
             </div>
 
-            <div class="detail-layout">
-                <div>
-                    <img src="https://placehold.co/600x800?text=Detailed+Photo" alt="Missing Person" class="detail-img">
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <img src="https://placehold.co/100x100?text=1" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;">
-                        <img src="https://placehold.co/100x100?text=2" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;">
-                        <img src="https://placehold.co/100x100?text=3" style="width: 80px; height: 80px; object-fit: cover; border-radius: 4px; cursor: pointer;">
-                    </div>
-                </div>
-                
-                <div>
-                    <h2 style="color: var(--primary-color); margin-top: 0;">张三 (Zhang San)</h2>
-                    <div style="margin-bottom: 1rem;">
-                        <span class="tag" style="background-color: #ffebee; color: var(--accent-color);">急寻</span>
-                        <span class="tag">未成年</span>
-                    </div>
-
-                    <table class="info-table">
-                        <tr>
-                            <th>性别 / Gender</th>
-                            <td>男 / Male</td>
-                        </tr>
-                        <tr>
-                            <th>出生日期 / DOB</th>
-                            <td>2012-05-15 (12岁)</td>
-                        </tr>
-                        <tr>
-                            <th>籍贯 / Hometown</th>
-                            <td>山东省济南市</td>
-                        </tr>
-                        <tr>
-                            <th>走失时间 / Date Missing</th>
-                            <td>2024-11-20 14:30</td>
-                        </tr>
-                        <tr>
-                            <th>走失地点 / Location</th>
-                            <td>北京市海淀区中关村附近</td>
-                        </tr>
-                        <tr>
-                            <th>身高 / Height</th>
-                            <td>155 cm</td>
-                        </tr>
-                        <tr>
-                            <th>体貌特征 / Features</th>
-                            <td>右眉上方有一颗小黑痣，走失时背蓝色书包，戴黑框眼镜。</td>
-                        </tr>
-                        <tr>
-                            <th>衣着打扮 / Clothing</th>
-                            <td>上身穿白色T恤，下身深蓝色运动裤，白色运动鞋。</td>
-                        </tr>
-                    </table>
-
-                    <div style="background-color: #f8f9fa; padding: 1.5rem; border-radius: var(--radius); margin-top: 2rem; border-left: 4px solid var(--accent-color);">
-                        <h3 style="margin-top: 0;">有线索吗？</h3>
-                        <p>如果您见过这个人，或者有任何相关线索，请立即联系：</p>
-                        <p style="font-size: 1.2rem; font-weight: bold;">李先生 (父亲): 138-0000-0000</p>
-                        <p style="font-size: 1.2rem; font-weight: bold;">或者拨打报警电话: 110</p>
-                        
-                        <hr style="border: 0; border-top: 1px solid #ddd; margin: 1.5rem 0;">
-                        
-                        <button class="btn btn-primary" style="width: 100%;">我提供线索</button>
-                        <button class="btn btn-outline" style="width: 100%; margin-top: 0.5rem;">下载/打印寻人启事</button>
-                    </div>
+            <div class="detail-layout" id="detail-container">
+                <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
+                    <p>加载中... / Loading...</p>
                 </div>
             </div>
+        </div>
+    </main>
+
+    <script type="module">
+        import { supabase } from './js/supabase-client.js';
+
+        async function loadDetail() {
+            const container = document.getElementById('detail-container');
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+
+            if (!id) {
+                container.innerHTML = '<p>无效的 ID / Invalid ID</p>';
+                return;
+            }
+
+            try {
+                const { data: person, error } = await supabase
+                    .from('missing_persons')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+
+                if (error) throw error;
+
+                if (!person) {
+                    container.innerHTML = '<p>未找到该信息 / Person not found</p>';
+                    return;
+                }
+
+                const age = person.dob ? (new Date().getFullYear() - new Date(person.dob).getFullYear()) + '岁' : '未知';
+                
+                container.innerHTML = `
+                    <div>
+                        <img src="${person.photo_url || 'https://placehold.co/600x800?text=No+Image'}" alt="${person.name}" class="detail-img">
+                    </div>
+                    
+                    <div>
+                        <h2 style="color: var(--primary-color); margin-top: 0;">${person.name}</h2>
+                        <div style="margin-bottom: 1rem;">
+                            <span class="tag" style="background-color: #ffebee; color: var(--accent-color);">急寻 / Urgent</span>
+                            <span class="tag">${person.gender === 'male' ? '男 / Male' : '女 / Female'}</span>
+                        </div>
+
+                        <table class="info-table">
+                            <tr>
+                                <th>性别 / Gender</th>
+                                <td>${person.gender === 'male' ? '男' : '女'}</td>
+                            </tr>
+                            <tr>
+                                <th>出生日期 / DOB</th>
+                                <td>${person.dob || '未知'} (${age})</td>
+                            </tr>
+                            <tr>
+                                <th>走失时间 / Date Missing</th>
+                                <td>${new Date(person.missing_date).toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                                <th>走失地点 / Location</th>
+                                <td>${person.missing_location}</td>
+                            </tr>
+                            <tr>
+                                <th>身高 / Height</th>
+                                <td>${person.height ? person.height + ' cm' : '未知'}</td>
+                            </tr>
+                            <tr>
+                                <th>体貌特征 / Features</th>
+                                <td>${person.description || '无详细描述'}</td>
+                            </tr>
+                            <tr>
+                                <th>衣着打扮 / Clothing</th>
+                                <td>${person.clothing || '无详细描述'}</td>
+                            </tr>
+                        </table>
+
+                        <div style="background-color: #f8f9fa; padding: 1.5rem; border-radius: var(--radius); margin-top: 2rem; border-left: 4px solid var(--accent-color);">
+                            <h3 style="margin-top: 0;">有线索吗？ / Have a clue?</h3>
+                            <p>如果您见过这个人，或者有任何相关线索，请立即联系：</p>
+                            <p style="font-size: 1.2rem; font-weight: bold;">${person.contact_name} (${person.contact_relationship || '家属'}): ${person.contact_phone}</p>
+                            ${person.contact_phone_alt ? `<p style="font-size: 1.2rem; font-weight: bold;">备用电话 / Alt: ${person.contact_phone_alt}</p>` : ''}
+                            <p style="font-size: 1.2rem; font-weight: bold;">或者拨打报警电话: 110</p>
+                            
+                            <hr style="border: 0; border-top: 1px solid #ddd; margin: 1.5rem 0;">
+                            
+                            <button class="btn btn-primary" style="width: 100%;" onclick="alert('请直接拨打上方电话联系家属。\\nPlease call the number above.')">我提供线索 / I have a clue</button>
+                        </div>
+                    </div>
+                `;
+
+            } catch (err) {
+                console.error('Error loading detail:', err);
+                container.innerHTML = '<p>加载失败 / Failed to load</p>';
+            }
+        }
+
+        loadDetail();
+    </script>
         </div>
     </main>
 

@@ -28,93 +28,90 @@
         <div class="container">
             <div class="filters">
                 <div class="search-bar">
-                    <input type="text" class="form-control" placeholder="输入姓名或关键词搜索...">
-                    <select class="form-control" style="max-width: 200px;">
-                        <option value="">所有地区</option>
-                        <option value="beijing">北京</option>
-                        <option value="shanghai">上海</option>
-                        <option value="guangzhou">广州</option>
-                        <option value="shenzhen">深圳</option>
+                    <input type="text" id="searchInput" class="form-control" placeholder="输入姓名或关键词搜索...">
+                    <select id="locationInput" class="form-control" style="max-width: 200px;">
+                        <option value="">所有地区 / All Locations</option>
+                        <option value="北京">北京 / Beijing</option>
+                        <option value="上海">上海 / Shanghai</option>
+                        <option value="广州">广州 / Guangzhou</option>
+                        <option value="深圳">深圳 / Shenzhen</option>
+                        <option value="其他">其他 / Other</option>
                     </select>
-                    <button class="btn btn-primary">搜索</button>
+                    <button id="searchBtn" class="btn btn-primary">搜索 / Search</button>
                 </div>
                 <div style="display: flex; gap: 1rem; margin-top: 1rem; flex-wrap: wrap;">
-                    <label><input type="checkbox"> 只看未成年</label>
-                    <label><input type="checkbox"> 只看老人</label>
-                    <label><input type="checkbox"> 最近一周</label>
+                    <!-- Simple filters for now -->
+                    <!-- <label><input type="checkbox"> 只看未成年</label> -->
                 </div>
             </div>
 
-            <div class="grid">
-                <!-- Cards would be dynamically generated here, but we'll mock a few more -->
-                <div class="card">
-                    <img src="https://placehold.co/400x300?text=Person+1" alt="Missing Person" class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">张三 (Zhang San)</h4>
-                        <p class="card-text"><strong>年龄:</strong> 12岁</p>
-                        <p class="card-text"><strong>地点:</strong> 北京市海淀区</p>
-                        <p class="card-text"><strong>时间:</strong> 2024-11-20</p>
-                        <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://placehold.co/400x300?text=Person+2" alt="Missing Person" class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">李四 (Li Si)</h4>
-                        <p class="card-text"><strong>年龄:</strong> 78岁</p>
-                        <p class="card-text"><strong>地点:</strong> 上海市浦东新区</p>
-                        <p class="card-text"><strong>时间:</strong> 2024-11-18</p>
-                        <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://placehold.co/400x300?text=Person+3" alt="Missing Person" class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">王五 (Wang Wu)</h4>
-                        <p class="card-text"><strong>年龄:</strong> 35岁</p>
-                        <p class="card-text"><strong>地点:</strong> 广州市天河区</p>
-                        <p class="card-text"><strong>时间:</strong> 2024-10-05</p>
-                        <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                    </div>
-                </div>
-
-                 <div class="card">
-                    <img src="https://placehold.co/400x300?text=Person+4" alt="Missing Person" class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">赵六 (Zhao Liu)</h4>
-                        <p class="card-text"><strong>年龄:</strong> 45岁</p>
-                        <p class="card-text"><strong>地点:</strong> 深圳市南山区</p>
-                        <p class="card-text"><strong>时间:</strong> 2024-09-12</p>
-                        <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                    </div>
-                </div>
-                 <div class="card">
-                    <img src="https://placehold.co/400x300?text=Person+5" alt="Missing Person" class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">孙七 (Sun Qi)</h4>
-                        <p class="card-text"><strong>年龄:</strong> 8岁</p>
-                        <p class="card-text"><strong>地点:</strong> 成都市武侯区</p>
-                        <p class="card-text"><strong>时间:</strong> 2024-11-25</p>
-                        <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                    </div>
-                </div>
-                 <div class="card">
-                    <img src="https://placehold.co/400x300?text=Person+6" alt="Missing Person" class="card-img">
-                    <div class="card-body">
-                        <h4 class="card-title">周八 (Zhou Ba)</h4>
-                        <p class="card-text"><strong>年龄:</strong> 22岁</p>
-                        <p class="card-text"><strong>地点:</strong> 武汉市洪山区</p>
-                        <p class="card-text"><strong>时间:</strong> 2024-10-30</p>
-                        <a href="detail.html" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
-                    </div>
+            <div class="grid" id="list-grid">
+                <div style="text-align: center; width: 100%; grid-column: 1 / -1;">
+                    <p>加载中... / Loading...</p>
                 </div>
             </div>
             
-            <div style="text-align: center; margin-top: 3rem;">
-                 <button class="btn btn-outline">加载更多...</button>
-            </div>
+            <!-- Pagination could be added here -->
+        </div>
+    </main>
+
+    <script type="module">
+        import { supabase } from './js/supabase-client.js';
+
+        async function loadCases() {
+            const container = document.getElementById('list-grid');
+            const searchInput = document.getElementById('searchInput').value;
+            const locationInput = document.getElementById('locationInput').value;
+
+            container.innerHTML = '<div style="text-align: center; width: 100%; grid-column: 1 / -1;"><p>加载中... / Loading...</p></div>';
+
+            try {
+                let query = supabase
+                    .from('missing_persons')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+
+                if (searchInput) {
+                    query = query.ilike('name', `%${searchInput}%`);
+                }
+
+                if (locationInput) {
+                    query = query.ilike('missing_location', `%${locationInput}%`);
+                }
+
+                const { data: cases, error } = await query;
+
+                if (error) throw error;
+
+                if (!cases || cases.length === 0) {
+                    container.innerHTML = '<div style="text-align: center; width: 100%; grid-column: 1 / -1;"><p>暂无匹配信息 / No cases found.</p></div>';
+                    return;
+                }
+
+                container.innerHTML = cases.map(person => `
+                    <div class="card">
+                        <img src="${person.photo_url || 'https://placehold.co/400x300?text=No+Image'}" alt="${person.name}" class="card-img">
+                        <div class="card-body">
+                            <h4 class="card-title">${person.name}</h4>
+                            <p class="card-text"><strong>年龄 / Age:</strong> ${person.dob ? (new Date().getFullYear() - new Date(person.dob).getFullYear()) + '岁' : '未知'}</p>
+                            <p class="card-text"><strong>地点 / Location:</strong> ${person.missing_location}</p>
+                            <p class="card-text"><strong>时间 / Date:</strong> ${new Date(person.missing_date).toLocaleDateString()}</p>
+                            <a href="detail.html?id=${person.id}" class="btn btn-outline" style="display: block; text-align: center; margin-top: 1rem;">查看详情</a>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (err) {
+                console.error('Error loading cases:', err);
+                container.innerHTML = '<div style="text-align: center; width: 100%; grid-column: 1 / -1; color: red;"><p>加载失败，请刷新重试。</p></div>';
+            }
+        }
+
+        document.getElementById('searchBtn').addEventListener('click', loadCases);
+        
+        // Load on start
+        loadCases();
+    </script>
         </div>
     </main>
 
